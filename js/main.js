@@ -1,6 +1,16 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+// Set canvas to full window size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Update canvas size when window is resized
+window.addEventListener('resize', function() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
 /**
  * reference for bullet update interval
  */
@@ -16,25 +26,29 @@ let collisionCheckInterval;
  */
 let enemyMovementInterval;  
 
+// Calculate spaceship size based on canvas dimensions
+const SPACESHIP_WIDTH = Math.floor(canvas.width * 0.1); // 5% of screen width
+const SPACESHIP_HEIGHT = Math.floor(canvas.height * 0.1); // 5% of screen height
+
 /**
  * Initial x-coordinate of user ship
  */
-const X_COORDINATE_USER_SHIP = canvas.width / 2 - 10;  
+const X_COORDINATE_USER_SHIP = canvas.width / 2 - SPACESHIP_WIDTH / 2;  
 
 /**
  * Initial y-coordinate of user ship
  */
-const Y_COORDINATE_USER_SHIP = canvas.height - 30; 
+const Y_COORDINATE_USER_SHIP = canvas.height - SPACESHIP_HEIGHT - 20; 
 
 /**
  * speed of user ship to go left and right
  */
-const speed = 5;                                  
+const speed = Math.floor(canvas.width * 0.005); // Scale speed to screen width
 
 /**
  * moving speed of enemy
  */
-const enemySpeed = 1;                                  
+const enemySpeed = Math.floor(canvas.width * 0.001) + 1; // Scale enemy speed                           
 
 /**
  * User choice to play the game by which space ship
@@ -51,12 +65,17 @@ let enemyDirection = 1;
  */
 let gameOver = false;
 
-// Explosion assets
+// Audio assets
 
 /**
  * Explosion sound
  */
 const explosionSound = new Audio("./../assets/audio/explosion.mp3");   
+
+/**
+ * Bullet firing sound
+ */
+const bulletFireSound = new Audio("./../assets/audio/bulletFire.mp3");
 
 /**
  * Explosion gif
@@ -70,12 +89,20 @@ explosionImg.src = "./../assets/images/explosionGif2.gif";
 let explosions = [];                                                   
 
 /**
+ * Calculate enemy dimensions based on canvas size
+ */
+const ENEMY_WIDTH = Math.floor(canvas.width * 0.05); // 3% of screen width
+const ENEMY_HEIGHT = Math.floor(canvas.height * 0.05); // 3% of screen height
+const rowSpace = Math.floor(canvas.height * 0.1); // 5% of screen height
+const enemySpacing = Math.floor(canvas.width * 0.02); // 1% of screen width
+
+/**
  * List of all user spaceship
  */
 let spaceships = [
-    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: 30, height: 30, img: new Image(), path: "./../assets/images/spaceship1.png"},  // spaceship-1
-    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: 30, height: 30, img: new Image(), path: "./../assets/images/spaceship2.png"},  // spaceship-2
-    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: 30, height: 30, img: new Image(), path: "./../assets/images/spaceship3.png"}   // spaceship-3
+    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./../assets/images/spaceship1.png"},  // spaceship-1
+    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./../assets/images/spaceship2.png"},  // spaceship-2
+    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./../assets/images/spaceship3.png"}   // spaceship-3
 ];
 
 /**
@@ -92,19 +119,9 @@ spaceship.img.src = spaceship.path;   // Load the spaceship
 const enemyRows = 3;     
 
 /**
- * Number of columns of enemy spaceship
+ * Number of columns of enemy spaceship - adjust based on screen width
  */
-const enemyCols = 7;     
-
-/**
- * Space between the rows of spaceship
- */
-const rowSpace = 20;     
-
-/**
- * Space between the spaceship in one row
- */
-const enemySpacing = 2;  
+const enemyCols = Math.floor(canvas.width / (ENEMY_WIDTH + enemySpacing) * 0.9);     
 
 /**
  * List of all enemy space ships
@@ -116,10 +133,10 @@ let enemyShips = [];
 for (let row = 0; row < enemyRows; row++) {
     for (let col = 0; col < enemyCols; col++) {
         let enemy = {
-            x: col * (30 + enemySpacing),
-            y: row * rowSpace,
-            width: 20,
-            height: 20,
+            x: col * (ENEMY_WIDTH + enemySpacing) + canvas.width * 0.1, // Start 10% from left edge
+            y: row * rowSpace + canvas.height * 0.05, // Start 5% from top
+            width: ENEMY_WIDTH,
+            height: ENEMY_HEIGHT,
             img: new Image(),
             path: "./../assets/images/enemySS.png"
         };
@@ -129,6 +146,12 @@ for (let row = 0; row < enemyRows; row++) {
 }
 
 // Bullets
+
+/**
+ * Calculate bullet dimensions based on canvas size
+ */
+const BULLET_WIDTH = Math.floor(canvas.width * 0.03); // 1% of screen width
+const BULLET_HEIGHT = Math.floor(canvas.height * 0.05); // 3% of screen height
 
 /**
  * user fired bullet array to keep track
@@ -143,12 +166,12 @@ let enemyBullets = [];
 /**
  * user fired bullet speed
  */
-const bulletSpeed = 7;                                      
+const bulletSpeed = Math.floor(canvas.height * 0.01) + 3; // Scale bullet speed to screen height                                   
 
 /**
  * Enemy fired bullet speed
  */
-const enemyBulletSpeed = 5;                 
+const enemyBulletSpeed = Math.floor(canvas.height * 0.005) + 3; // Scale enemy bullet speed               
 
 /**
  * User fired bullet image loaded
@@ -192,11 +215,15 @@ function createExplosion(x, y, width, height) {
  * Fire user bullet, when user will press space button
  */
 function fire() {
+    // Play bullet fire sound
+    bulletFireSound.currentTime = 0;
+    bulletFireSound.play();
+    
     let bullet = {
-        x: spaceship.x + spaceship.width / 2 - 5,
-        y: spaceship.y - 10,
-        width: 10,
-        height: 20,
+        x: spaceship.x + spaceship.width / 2 - BULLET_WIDTH / 2,
+        y: spaceship.y - BULLET_HEIGHT,
+        width: BULLET_WIDTH,
+        height: BULLET_HEIGHT,
         img: bulletImg
     };
     bullets.push(bullet);
@@ -219,17 +246,17 @@ function enemyFire() {
 
         // create bullet object with all information 
         let bullet = {
-            x: shooter.x + shooter.width / 2 - 5,
+            x: shooter.x + shooter.width / 2 - BULLET_WIDTH / 2,
             y: shooter.y + shooter.height,
-            width: 10,
-            height: 20,
+            width: BULLET_WIDTH,
+            height: BULLET_HEIGHT,
             img: enemyBulletImg
         };
         
         
         enemyBullets.push(bullet);          // push bullet in enemy bullets list
     }
-    setTimeout(enemyFire, 1000);            // Enemy fires every second
+    setTimeout(enemyFire, 1500);            // Enemy fires every second
 }
 
 /**
@@ -290,6 +317,14 @@ function checkCollisions() {
                 bullets.splice(i, 1);
                 enemyShips.splice(j, 1);
                 
+                // Check if all enemies are defeated
+                if (enemyShips.length === 0) {
+                    setTimeout(() => {
+                        alert("You won! All enemies defeated!");
+                        endGame();
+                    }, 500);
+                }
+                
                 // Exit inner loop since bullet is gone
                 break;
             }
@@ -301,7 +336,7 @@ function checkCollisions() {
         let bullet = enemyBullets[i];
 
         // Create a smaller hitbox for the player's ship - a rectangular box around ship for better accuracy of collision
-        const hitboxPadding = 5;
+        const hitboxPadding = Math.floor(SPACESHIP_WIDTH * 0.15);
         const playerHitbox = {
             x: spaceship.x + hitboxPadding,
             y: spaceship.y + hitboxPadding,
@@ -310,7 +345,7 @@ function checkCollisions() {
         };
         
         // Create a smaller hitbox for the bullet - a rectangular box around bullet for better accuracy of collsion
-        const bulletHitboxPadding = 5;
+        const bulletHitboxPadding = Math.floor(BULLET_WIDTH * 0.2);
         const bulletHitbox = {
             x: bullet.x + bulletHitboxPadding,
             y: bullet.y + bulletHitboxPadding,
@@ -326,7 +361,7 @@ function checkCollisions() {
             bulletHitbox.y + bulletHitbox.height > playerHitbox.y
         ) {
             // Create explosion at player position
-            createExplosion(spaceship.x - 10,spaceship.y - 10,spaceship.width + 20,spaceship.height + 20);
+            createExplosion(spaceship.x - 10, spaceship.y - 10, spaceship.width + 20, spaceship.height + 20);
             
             // Remove the bullet that hit the player
             enemyBullets.splice(i, 1);
@@ -352,9 +387,8 @@ function draw() {
     if (!gameOver) {
         ctx.drawImage(spaceship.img, spaceship.x, spaceship.y, spaceship.width, spaceship.height);
     }
-    
-    // Draw enemies
-    enemyShips.forEach(enemy => ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height));
+// Draw enemies
+enemyShips.forEach(enemy => ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height));
     
     // Draw bullets
     bullets.forEach(bullet => ctx.drawImage(bullet.img, bullet.x, bullet.y, bullet.width, bullet.height));
@@ -384,12 +418,20 @@ function moveEnemies() {
         if (enemy.x + enemy.width >= canvas.width || enemy.x <= 0) {
             edgeReached = true;
         }
+        
+        // Check if enemies reached the player's level
+        if (enemy.y + enemy.height >= spaceship.y) {
+            setTimeout(() => {
+                alert("Game Over! Enemies have reached your base!");
+                endGame();
+            }, 500);
+        }
     });
 
     // Reverse the direction and move all enemy ships to one step closer to user
     if (edgeReached) {
         enemyDirection *= -1;
-        enemyShips.forEach(enemy => enemy.y += 5);
+        enemyShips.forEach(enemy => enemy.y += Math.floor(canvas.height * 0.01) + 5); // Scale the descent
     }
 
     enemyMovementInterval = setTimeout(moveEnemies, 70);
@@ -411,11 +453,11 @@ function handleKeyDown(event) {
     }
     
     // Provide functinality for right movement
-    if ((event.key === "ArrowRight" || event.key === "d") && spaceship.x + spaceship.width < canvas.width) {
+    if ((event.key === "ArrowRight" || event.key.toLowerCase() === "d") && spaceship.x + spaceship.width < canvas.width) {
         spaceship.x += speed;
     }
     // Provide functionality for left movement
-    else if ((event.key === "ArrowLeft" || event.key === "a") && spaceship.x > 0) {
+    else if ((event.key === "ArrowLeft" || event.key.toLowerCase() === "a") && spaceship.x > 0) {
         spaceship.x -= speed;
     }
     // Provide functionality for space bar 
@@ -452,7 +494,12 @@ function endGame() {
     
     // Show game over message after a short delay to see final explosion
     setTimeout(() => {
-        alert("Game Over! You were hit!");
+        if (!alert("Game Over!")) {
+            // Optionally, provide restart functionality
+            if (confirm("Would you like to play again?")) {
+                location.reload();
+            }
+        }
         
         // Optionally, disable user controls
         document.removeEventListener("keydown", handleKeyDown);
