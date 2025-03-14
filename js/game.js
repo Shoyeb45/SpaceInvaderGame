@@ -27,8 +27,8 @@ let collisionCheckInterval;
 let enemyMovementInterval;  
 
 // Calculate spaceship size based on canvas dimensions
-const SPACESHIP_WIDTH = Math.floor(canvas.width * 0.1); // 5% of screen width
-const SPACESHIP_HEIGHT = Math.floor(canvas.height * 0.1); // 5% of screen height
+const SPACESHIP_WIDTH = Math.floor(canvas.width * 0.1); // 10% of screen width
+const SPACESHIP_HEIGHT = Math.floor(canvas.height * 0.15); // 15% of screen height
 
 /**
  * Initial x-coordinate of user ship
@@ -53,7 +53,7 @@ const enemySpeed = Math.floor(canvas.width * 0.001) + 1; // Scale enemy speed
 /**
  * User choice to play the game by which space ship
  */
-let choice = 2;    
+let choice = 0;    
 
 /**
  * Initial direction of enemy spaceship 
@@ -75,7 +75,7 @@ const explosionSound = new Audio("./../assets/audio/explosion.mp3");
 /**
  * Bullet firing sound
  */
-const bulletFireSound = new Audio("./../assets/audio/bulletFire.mp3");
+const bulletFireSound = new Audio("./../assets/audio/bulletfire.mp3");
 
 /**
  * Explosion gif
@@ -216,7 +216,7 @@ function createExplosion(x, y, width, height) {
  */
 function fire() {
     // Play bullet fire sound
-    bulletFireSound.currentTime = 0;
+    bulletFireSound.currentTime = 0.08;
     bulletFireSound.play();
     
     let bullet = {
@@ -228,6 +228,7 @@ function fire() {
     };
     bullets.push(bullet);
 }
+
 
 /**
  * Randomy firing of eney bullet. 
@@ -241,7 +242,6 @@ function enemyFire() {
 
     // Check if there is any enemy ships
     if (enemyShips.length > 0) {
-        
         let shooter = enemyShips[Math.floor(Math.random() * enemyShips.length)];    // select random bullet
 
         // create bullet object with all information 
@@ -376,13 +376,27 @@ function checkCollisions() {
     }
 }
 
+// Create video element dynamically
+const video = document.createElement("video");
+video.src = "./assets/video/planetBG.mp4";
+video.loop = true;
+video.muted = true;  // Ensure autoplay works in all browsers
+video.autoplay = true;
+video.play();
+
 /**
  * This function is doing main thing, i.e., to draw everything on canvas 
  */
 function draw() {
     // Clear previous frame
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
+    // Draw background video
+    if (video.readyState >= 2) { // Ensure video is loaded before drawing
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        // ctx.drawImage(video, 0, 0);
+    }
+
     // Draw player ship if game is not over
     if (!gameOver) {
         ctx.drawImage(spaceship.img, spaceship.x, spaceship.y, spaceship.width, spaceship.height);
@@ -505,3 +519,4 @@ function endGame() {
         document.removeEventListener("keydown", handleKeyDown);
     }, 1000);
 }
+
