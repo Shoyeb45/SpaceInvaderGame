@@ -1,4 +1,122 @@
-.spaceship-cont {
-    display: flex;
-    
+
+body {
+    background: url(./../assets/images/Hc67ZF0SgzlYYuJ4OGry3oEX.png);
+    background-color: rgba(0, 0, 0, 0.15);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
+
+iframe {
+    display: none;
+    position: absolute;
+    height: 600px;
+    width: 1400px;
+    left : 60px;
+    top: 50px;
+    border: none;
+}
+
+@font-face {
+    font-family: "Space Nova";
+    src: url(./../assets/font/SpaceNova-6Rpd1.otf);
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
+    50% { opacity: 0.5; transform: scale(0.98); text-shadow: 0 0 5px #6df1fc, 0 0 10px #6df1fc; }
+    100% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
+}
+
+.start-msg {
+    font-family: 'Space Nova', 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: #ffffff;
+    position: absolute;
+    top: 83%;
+    left: 20%;
+    transform: translateX(-50%);
+    text-align: center;
+    text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
+    animation: pulse 1.5s infinite ease-in-out;
+    letter-spacing: 2px;
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 15px 30px;
+    z-index: 100;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .start-msg {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        width: 80%;
+        white-space: normal;
+    }
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
+    50% { text-shadow: 0 0 15px black, 0 0 30px black; }
+    100% { text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
+  }
+
+  
+  .game-title-container {
+    position: absolute;
+    top: 32%;
+    left: 57%;
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 40px;
+  }
+  
+  .game-title-container > h1:first-of-type {
+    margin-left: -150px;
+  }
+
+  .game-title-container h1 {
+    font-weight: unset;
+    margin-top: unset;
+  }
+
+  .game-title {
+    font-family: 'Space Nova', 'Orbitron', sans-serif;
+    font-size: 4.5rem;
+    font-weight: lighter;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: #ffffff;
+    text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
+    animation: glow 3s infinite ease-in-out;
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .title-highlight {
+    color: #ff5a5a;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .game-title {
+      font-size: 2.5rem;
+      letter-spacing: 3px;
+    }
+    
+    .title-ufo {
+      width: 40px;
+      height: 16px;
+      top: -10px;
+      left: calc(50% - 20px);
+    }
+    
+    .title-ufo::before {
+      top: 3px;
+      left: 10px;
+      width: 20px;
+      height: 6px;
+    }
+  }
