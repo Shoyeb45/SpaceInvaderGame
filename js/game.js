@@ -70,18 +70,18 @@ let gameOver = false;
 /**
  * Explosion sound
  */
-const explosionSound = new Audio("./../assets/audio/explosion.mp3");   
+const explosionSound = new Audio("./assets/audio/explosion.mp3");   
 
 /**
  * Bullet firing sound
  */
-const bulletFireSound = new Audio("./../assets/audio/bulletfire.mp3");
+const bulletFireSound = new Audio("./assets/audio/bulletfire.mp3");
 
 /**
  * Explosion gif
  */
 const explosionImg = new Image();                                      
-explosionImg.src = "./../assets/images/explosionGif2.gif";             
+explosionImg.src = "./assets/images/explosionGif2.gif";             
 
 /**
  * Explosions array to track all explosions
@@ -100,9 +100,9 @@ const enemySpacing = Math.floor(canvas.width * 0.02); // 1% of screen width
  * List of all user spaceship
  */
 let spaceships = [
-    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./../assets/images/spaceship1.png"},  // spaceship-1
-    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./../assets/images/spaceship2.png"},  // spaceship-2
-    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./../assets/images/spaceship3.png"}   // spaceship-3
+    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./assets/images/spaceship1.png"},  // spaceship-1
+    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./assets/images/spaceship2.png"},  // spaceship-2
+    { x: X_COORDINATE_USER_SHIP, y: Y_COORDINATE_USER_SHIP, width: SPACESHIP_WIDTH, height: SPACESHIP_HEIGHT, img: new Image(), path: "./assets/images/spaceship3.png"}   // spaceship-3
 ];
 
 /**
@@ -138,7 +138,7 @@ for (let row = 0; row < enemyRows; row++) {
             width: ENEMY_WIDTH,
             height: ENEMY_HEIGHT,
             img: new Image(),
-            path: "./../assets/images/enemySS.png"
+            path: "./assets/images/enemySS.png"
         };
         enemy.img.src = enemy.path;
         enemyShips.push(enemy);
@@ -177,13 +177,13 @@ const enemyBulletSpeed = Math.floor(canvas.height * 0.005) + 3; // Scale enemy b
  * User fired bullet image loaded
  */
 const bulletImg = new Image();
-bulletImg.src = "./../assets/images/userBullet.png";   
+bulletImg.src = "./assets/images/userBullet.png";   
 
 /**
  * Enemy fired bullet image loaded
  */
 const enemyBulletImg = new Image();
-enemyBulletImg.src = "./../assets/images/enemyBullet.png";  
+enemyBulletImg.src = "./assets/images/enemyBullet.png";  
 
 /**
  * Function to create explsion when bullet will hit space ship
@@ -320,8 +320,7 @@ function checkCollisions() {
                 // Check if all enemies are defeated
                 if (enemyShips.length === 0) {
                     setTimeout(() => {
-                        alert("You won! All enemies defeated!");
-                        endGame();
+                        endGame("You won! All Enemies defeated");
                     }, 500);
                 }
                 
@@ -368,7 +367,9 @@ function checkCollisions() {
 
             // Wait a short time to show explosion before ending game
             setTimeout(() => {
-                endGame();
+                clearInterval(enemyMovementInterval);
+                clearInterval(bulletUpdateInterval);
+                endGame("Game Over");
             }, 500);
             
             return; // Exit the function to prevent multiple triggers
@@ -378,7 +379,7 @@ function checkCollisions() {
 
 // Create video element dynamically
 const video = document.createElement("video");
-video.src = "./assets/video/planetBG.mp4";
+video.src = "./assets/video/universeBG.mp4";
 video.loop = true;
 video.muted = true;  // Ensure autoplay works in all browsers
 video.autoplay = true;
@@ -436,8 +437,7 @@ function moveEnemies() {
         // Check if enemies reached the player's level
         if (enemy.y + enemy.height >= spaceship.y) {
             setTimeout(() => {
-                alert("Game Over! Enemies have reached your base!");
-                endGame();
+                endGame("Game Over!! Enemy reached your base");
             }, 500);
         }
     });
@@ -445,7 +445,7 @@ function moveEnemies() {
     // Reverse the direction and move all enemy ships to one step closer to user
     if (edgeReached) {
         enemyDirection *= -1;
-        enemyShips.forEach(enemy => enemy.y += Math.floor(canvas.height * 0.01) + 5); // Scale the descent
+        enemyShips.forEach(enemy => enemy.y += Math.floor(canvas.height * 0.01) + 10); // Scale the descent
     }
 
     enemyMovementInterval = setTimeout(moveEnemies, 70);
@@ -497,7 +497,7 @@ enemyFire();
 /**
  * Function to handle game over
  */
-function endGame() {
+function endGame(msg) {
     // Change gameover flag
     gameOver = true;
     
@@ -508,13 +508,21 @@ function endGame() {
     
     // Show game over message after a short delay to see final explosion
     setTimeout(() => {
-        if (!alert("Game Over!")) {
-            // Optionally, provide restart functionality
-            if (confirm("Would you like to play again?")) {
-                location.reload();
-            }
-        }
+        const modal = document.getElementById("game-over-modal");
+        modal.style.display = "flex";
+        const yesBtn = document.querySelector("#yes-btn");
+        const noBtn = document.querySelector("#no-btn");
         
+        document.querySelector("#game-over-modal h1").innerHTML = msg;
+        noBtn.addEventListener("mouseover", (event) => {
+            document.querySelector("#yes-btn i").style.visibility = "hidden";
+            document.querySelector("#no-btn i").style.visibility = "visible";
+        });
+
+        yesBtn.addEventListener("mouseover", (event) => {
+            document.querySelector("#no-btn i").style.visibility = "hidden";
+            document.querySelector("#yes-btn i").style.visibility = "visible";
+        });
         // Optionally, disable user controls
         document.removeEventListener("keydown", handleKeyDown);
     }, 1000);

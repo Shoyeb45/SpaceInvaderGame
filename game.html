@@ -5,12 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invader Game</title>
     <link rel="stylesheet" href="./css/game.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
 
     <main>
         <canvas id="myCanvas"></canvas>
     </main>
+
+    <div id="game-over-modal" class="game-over-modal">
+        <div class="game-over-modal-content">
+            <h1>GAME OVER</h1>
+            <h2>PLAY AGAIN</h2>
+            <div class="choices">
+                <a id="yes-btn"  href="./game.html"><i class="bi-chevron-right"></i> Yes</a>
+                <a id="no-btn" href="./index.html"><i class="bi-chevron-right"></i> No</a>
+            </div>
+         </div>
+    </div>
+
 
     <script src="./js/game.js">
     </script>
