@@ -53,7 +53,7 @@ const enemySpeed = Math.floor(canvas.width * 0.001) + 1; // Scale enemy speed
 /**
  * User choice to play the game by which space ship
  */
-let choice = 0;    
+let choice = new URLSearchParams(window.location.search).get("choice") | 0;    
 
 /**
  * Initial direction of enemy spaceship 
@@ -512,7 +512,7 @@ function endGame(msg) {
         modal.style.display = "flex";
         const yesBtn = document.querySelector("#yes-btn");
         const noBtn = document.querySelector("#no-btn");
-        
+
         document.querySelector("#game-over-modal h1").innerHTML = msg;
         noBtn.addEventListener("mouseover", (event) => {
             document.querySelector("#yes-btn i").style.visibility = "hidden";

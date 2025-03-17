@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders - Ship Selection</title>
+    <link rel="stylesheet" href="./css/start.css">
+</head>
+<body>
+    <main>
+        <h1 class="title">Select Your Spaceship</h1>
+        <form id="shipForm">
+            <div class="spaceship-cont">
+                <label class="ship-card" for="ship-0">
+                    <input type="radio" id="ship-0" name="choice" value="0">
+                    <div class="ship-img">
+                        <img src="./assets/images/spaceship1.png" alt="Spaceship 1">
+                        <div class="energy-effect"></div>
+                    </div>
+                    <h3 class="ship-name">Dark Stinger</h3>
+                    <div class="ship-stats">
+                        <div class="stat">
+                            SPEED
+                            <span class="stat-value">⚡⚡⚡</span>
+                        </div>
+                        <div class="stat">
+                            POWER
+                            <span class="stat-value">⚡⚡</span>
+                        </div>
+                        <div class="stat">
+                            DEFENSE
+                            <span class="stat-value">⚡</span>
+                        </div>
+                    </div>
+                </label>
+                
+                <label class="ship-card" for="ship-1">
+                    <input type="radio" id="ship-1" name="choice" value="1">
+                    <div class="ship-img">
+                        <img src="./assets/images/spaceship2.png" alt="Spaceship 2">
+                        <div class="energy-effect"></div>
+                    </div>
+                    <h3 class="ship-name">Voidrunner MK-II</h3>
+                    <div class="ship-stats">
+                        <div class="stat">
+                            SPEED
+                            <span class="stat-value">⚡⚡</span>
+                        </div>
+                        <div class="stat">
+                            POWER
+                            <span class="stat-value">⚡⚡⚡</span>
+                        </div>
+                        <div class="stat">
+                            DEFENSE
+                            <span class="stat-value">⚡⚡</span>
+                        </div>
+                    </div>
+                </label>
+                
+                <label class="ship-card" for="ship-2">
+                    <input type="radio" id="ship-2" name="choice" value="2">
+                    <div class="ship-img">
+                        <img src="./assets/images/spaceship3.png" alt="Spaceship 3">
+                        <div class="energy-effect"></div>
+                    </div>
+                    <h3 class="ship-name">Nebula Crusader</h3>
+                    <div class="ship-stats">
+                        <div class="stat">
+                            SPEED
+                            <span class="stat-value">⚡</span>
+                        </div>
+                        <div class="stat">
+                            POWER
+                            <span class="stat-value">⚡⚡</span>
+                        </div>
+                        <div class="stat">
+                            DEFENSE
+                            <span class="stat-value">⚡⚡⚡</span>
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <button id="start-game" type="submit" disabled>Launch Mission</button>
+        </form>
+    </main>
+
+    <script src="./js/start.js"></script>
+</body>
+</html>
