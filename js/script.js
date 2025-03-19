@@ -26,3 +26,7 @@ function showShips(event) {
     iframe.style.display = "block";
     iframe.src = "./../start.html";
 }
+
+document.addEventListener("click", function () {
+    document.documentElement.requestFullscreen();
+}, { once: true });

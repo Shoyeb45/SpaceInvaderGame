@@ -43,12 +43,12 @@ const Y_COORDINATE_USER_SHIP = canvas.height - SPACESHIP_HEIGHT - 20;
 /**
  * speed of user ship to go left and right
  */
-const speed = Math.floor(canvas.width * 0.005); // Scale speed to screen width
+const speed = 10; // Scale speed to screen width
 
 /**
  * moving speed of enemy
  */
-const enemySpeed = Math.floor(canvas.width * 0.001) + 1; // Scale enemy speed                           
+const enemySpeed = 3; // Scale enemy speed                           
 
 /**
  * User choice to play the game by which space ship
@@ -171,7 +171,7 @@ const bulletSpeed = Math.floor(canvas.height * 0.01) + 3; // Scale bullet speed 
 /**
  * Enemy fired bullet speed
  */
-const enemyBulletSpeed = Math.floor(canvas.height * 0.005) + 3; // Scale enemy bullet speed               
+const enemyBulletSpeed = Math.floor(canvas.height * 0.002) + 2; // Scale enemy bullet speed               
 
 /**
  * User fired bullet image loaded
@@ -256,7 +256,7 @@ function enemyFire() {
         
         enemyBullets.push(bullet);          // push bullet in enemy bullets list
     }
-    setTimeout(enemyFire, 1500);            // Enemy fires every second
+    setTimeout(enemyFire, 1200);            // Enemy fires every second
 }
 
 /**
@@ -512,7 +512,7 @@ function endGame(msg) {
         modal.style.display = "flex";
         const yesBtn = document.querySelector("#yes-btn");
         const noBtn = document.querySelector("#no-btn");
-
+        yesBtn.setAttribute("href", `./game.html?choice=${choice}`)
         document.querySelector("#game-over-modal h1").innerHTML = msg;
         noBtn.addEventListener("mouseover", (event) => {
             document.querySelector("#yes-btn i").style.visibility = "hidden";
