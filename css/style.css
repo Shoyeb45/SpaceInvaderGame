@@ -39,11 +39,9 @@ iframe::-webkit-scrollbar {
 }
 
 .start-msg {
-    /* padding: 0; */
     font-family: 'Space Nova', 'Orbitron', sans-serif;
     font-size: 1.7vw;
     color: #ffffff;
-    /* position: absolute; */
     top: 85vh;
     left: 22vw;
     transform: translateX(-50%);
@@ -103,7 +101,7 @@ iframe::-webkit-scrollbar {
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .game-title {
-      font-size: 3rem;
+      font-size: 2.6rem;
       letter-spacing: 3px;
     }
 
@@ -117,7 +115,7 @@ iframe::-webkit-scrollbar {
     .game-title-container {
       width: 40vw;
       margin-top: 26vh;
-      margin-left: 20vw;
+      margin-left: 16vw;
     }
     .start-msg-cont {
       margin-top: 45vh;
