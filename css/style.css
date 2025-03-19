@@ -2,7 +2,7 @@
 body {
     background: url(./../assets/images/Hc67ZF0SgzlYYuJ4OGry3oEX.png);
     background-color: rgba(0, 0, 0, 0.15);
-    background-size: cover;
+    background-size:100vw 100vh;
     background-repeat: no-repeat;
 }
 
@@ -29,11 +29,11 @@ iframe {
 
 .start-msg {
     font-family: 'Space Nova', 'Orbitron', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.7vw;
     color: #ffffff;
     position: absolute;
-    top: 83%;
-    left: 20%;
+    top: 85vh;
+    left: 22vw;
     transform: translateX(-50%);
     text-align: center;
     text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
@@ -41,16 +41,17 @@ iframe {
     letter-spacing: 2px;
     font-weight: 500;
     white-space: nowrap;
-    padding: 15px 30px;
+    padding: 1vw;
     z-index: 100;
 }
 
 /* Media query for responsiveness */
 @media (max-width: 768px) {
     .start-msg {
-        font-size: 1.2rem;
-        padding: 10px 20px;
-        width: 80%;
+        font-size: 1rem;
+        right: 10%;
+        /* padding: 10px 20px; */
+        /* width: 80%; */
         white-space: normal;
     }
 }
@@ -64,15 +65,14 @@ iframe {
   
   .game-title-container {
     position: absolute;
-    top: 32%;
-    left: 57%;
+    top: 35%;
+    left: 57vw;
     text-align: center;
-    padding: 20px 0;
-    margin-bottom: 40px;
+    padding:  0;
   }
   
   .game-title-container > h1:first-of-type {
-    margin-left: -150px;
+    margin-left: -2.1em;
   }
 
   .game-title-container h1 {
@@ -82,15 +82,14 @@ iframe {
 
   .game-title {
     font-family: 'Space Nova', 'Orbitron', sans-serif;
-    font-size: 4.5rem;
+    font-size: 5vw;
     font-weight: lighter;
     text-transform: uppercase;
-    letter-spacing: 5px;
+    letter-spacing: 0.09vw;
     color: #ffffff;
     text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
     animation: glow 3s infinite ease-in-out;
     margin: 0;
-    padding: 20px;
     position: relative;
     z-index: 1;
   }
@@ -102,21 +101,11 @@ iframe {
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .game-title {
-      font-size: 2.5rem;
+      /* font-size: 2.5rem; */
       letter-spacing: 3px;
     }
-    
-    .title-ufo {
-      width: 40px;
-      height: 16px;
-      top: -10px;
-      left: calc(50% - 20px);
-    }
-    
-    .title-ufo::before {
-      top: 3px;
-      left: 10px;
-      width: 20px;
-      height: 6px;
+
+    body {
+      /* background: url(); */
     }
   }

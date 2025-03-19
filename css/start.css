@@ -151,21 +151,3 @@ button:disabled {
     transform: none;
     box-shadow: none;
 }
-
-/* Energy effect on hover */
-.energy-effect {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 40px;
-    background: radial-gradient(ellipse at center, rgba(109, 241, 252, 0.7) 0%, rgba(109, 241, 252, 0) 70%);
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.ship-card:hover .energy-effect {
-    opacity: 0.8;
-}
