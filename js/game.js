@@ -383,7 +383,6 @@ video.src = "./assets/video/universeBG.mp4";
 video.loop = true;
 video.muted = true;  // Ensure autoplay works in all browsers
 video.autoplay = true;
-video.play();
 
 /**
  * This function is doing main thing, i.e., to draw everything on canvas 
@@ -482,17 +481,63 @@ function handleKeyDown(event) {
 
 // add event listener if any key is pressed 
 document.addEventListener("keydown", handleKeyDown);
-
-// Start the game : pass the draw function to draw all the images 
+video.play();
+// Draw background video
 requestAnimationFrame(draw);
 
-// At constant interval update bullets and check for collision
-bulletUpdateInterval = setInterval(updateBullets, 30);     
-collisionCheckInterval = setInterval(checkCollisions, 30);
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('instructionsModal');
+    const closeBtn = document.getElementById('closeModal');
+    const startBtn = document.getElementById('startGame');
+    
+    // Close modal when clicking the close button
+    closeBtn.addEventListener('click', function() {
+      closeModal();
+    });
+    
+    // Close modal when clicking the start button
+    startBtn.addEventListener('click', function() {
+      closeModal();
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+    
+    function closeModal() {
+      modal.style.opacity = '0';
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+      startGame();
 
-// Invoke move enemies and fire enemy function
-moveEnemies();
-enemyFire();
+    }
+    
+    // Add transition for smooth fade out
+    modal.style.transition = 'opacity 0.3s ease';
+  });
+
+
+
+
+
+// Start the game : pass the draw function to draw all the images 
+function startGame() {
+    // video.play();
+    requestAnimationFrame(draw);
+    // At constant interval update bullets and check for collision
+    bulletUpdateInterval = setInterval(updateBullets, 30);     
+    collisionCheckInterval = setInterval(checkCollisions, 30);
+
+    // Invoke move enemies and fire enemy function
+    moveEnemies();
+    enemyFire();
+}
+
+
 
 /**
  * Function to handle game over
