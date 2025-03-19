@@ -7,8 +7,7 @@ body {
     min-height: 100vh;
     margin: 0;
     -ms-overflow-style: none;
-    /* overflow: scroll; */
-    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 /* Custom Scrollbar for Space-Themed Game */
