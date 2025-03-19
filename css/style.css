@@ -4,16 +4,21 @@ body {
     background-color: rgba(0, 0, 0, 0.15);
     background-size:100vw 100vh;
     background-repeat: no-repeat;
+    overflow:hidden;
+    padding: 0;
+    margin: 0;
 }
 
 iframe {
     display: none;
-    position: absolute;
-    height: 600px;
-    width: 1400px;
-    left : 60px;
-    top: 50px;
+    height: 100vh;
+    width: 100vw;
     border: none;
+    /* overflow:hidden; */
+}
+
+iframe::-webkit-scrollbar {
+  display: none; /* Hides scrollbar for WebKit browsers (Chrome, Safari, Edge) */
 }
 
 @font-face {
@@ -22,16 +27,23 @@ iframe {
 }
 
 @keyframes pulse {
-    0% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
-    50% { opacity: 0.5; transform: scale(0.98); text-shadow: 0 0 5px #6df1fc, 0 0 10px #6df1fc; }
-    100% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
+  0% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
+  50% { opacity: 0.5; transform: scale(0.98); text-shadow: 0 0 5px #6df1fc, 0 0 10px #6df1fc; }
+  100% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
+}
+.start-msg-cont {
+  padding: 0;
+  display: flex;
+  margin-top: 32vh;
+  justify-content: center;
 }
 
 .start-msg {
+    /* padding: 0; */
     font-family: 'Space Nova', 'Orbitron', sans-serif;
     font-size: 1.7vw;
     color: #ffffff;
-    position: absolute;
+    /* position: absolute; */
     top: 85vh;
     left: 22vw;
     transform: translateX(-50%);
@@ -41,20 +53,10 @@ iframe {
     letter-spacing: 2px;
     font-weight: 500;
     white-space: nowrap;
-    padding: 1vw;
+    /* padding: 1vw; */
     z-index: 100;
 }
 
-/* Media query for responsiveness */
-@media (max-width: 768px) {
-    .start-msg {
-        font-size: 1rem;
-        right: 10%;
-        /* padding: 10px 20px; */
-        /* width: 80%; */
-        white-space: normal;
-    }
-}
 
 @keyframes glow {
     0% { text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
@@ -64,15 +66,15 @@ iframe {
 
   
   .game-title-container {
-    position: absolute;
-    top: 35%;
-    left: 57vw;
+    margin-top: 30vh;
+    width: 36vw;
+    margin-left: 55vw;
     text-align: center;
     padding:  0;
   }
   
   .game-title-container > h1:first-of-type {
-    margin-left: -2.1em;
+    margin-right: 10vw;
   }
 
   .game-title-container h1 {
@@ -101,11 +103,30 @@ iframe {
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .game-title {
-      /* font-size: 2.5rem; */
+      font-size: 3rem;
       letter-spacing: 3px;
     }
 
-    body {
-      /* background: url(); */
+    body {  
+      background: url(./../assets/images/bg4.jpeg);
+      background-size: auto 105vh;
+      background-position: -35vw 0vh;
+      background-repeat: no-repeat;
     }
+
+    .game-title-container {
+      width: 40vw;
+      margin-top: 26vh;
+      margin-left: 20vw;
+    }
+    .start-msg-cont {
+      margin-top: 45vh;
+    }
+      .start-msg {
+          font-size: 1rem;
+          right: 12%;
+          /* padding: 10px 20px; */
+          /* width: 80%; */
+          white-space: normal;
+      }
   }

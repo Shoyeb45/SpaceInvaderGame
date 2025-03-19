@@ -6,6 +6,7 @@ document.addEventListener("keydown", showShips);
 function hideBackground() {
     document.querySelector(".start-msg").style.display = "none";
     document.querySelector(".game-title-container").style.display = "none";
+    document.querySelector(".start-msg-cont").style.display = "none";
     const overlay = document.createElement("div");
     overlay.style.position = "absolute";
     overlay.style.top = "0";
