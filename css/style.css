@@ -1,37 +1,52 @@
-
 body {
-    background: url(./../assets/images/Hc67ZF0SgzlYYuJ4OGry3oEX.png);
-    background-color: rgba(0, 0, 0, 0.15);
-    background-size:100vw 100vh;
-    background-repeat: no-repeat;
-    overflow:hidden;
-    overflow-y: hidden;
-    padding: 0;
-    margin: 0;
+  background: url(./../assets/images/Hc67ZF0SgzlYYuJ4OGry3oEX.png);
+  background-color: rgba(0, 0, 0, 0.15);
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 iframe {
-    display: none;
-    height: 100vh;
-    width: 100vw;
-    border: none;
-    /* overflow:hidden; */
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  border: none;
+  /* overflow:hidden; */
 }
 
 iframe::-webkit-scrollbar {
-  display: none; /* Hides scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+  display: none;
+  /* Hides scrollbar for WebKit browsers (Chrome, Safari, Edge) */
 }
 
 @font-face {
-    font-family: "Space Nova";
-    src: url(./../assets/font/SpaceNova-6Rpd1.otf);
+  font-family: "Space Nova";
+  src: url(./../assets/font/SpaceNova-6Rpd1.otf);
 }
 
 @keyframes pulse {
-  0% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
-  50% { opacity: 0.5; transform: scale(0.98); text-shadow: 0 0 5px #6df1fc, 0 0 10px #6df1fc; }
-  100% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.98);
+    text-shadow: 0 0 5px #6df1fc, 0 0 10px #6df1fc;
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
+  }
 }
+
 .start-msg-cont {
   padding: 0;
   display: flex;
@@ -40,92 +55,102 @@ iframe::-webkit-scrollbar {
 }
 
 .start-msg {
-    font-family: 'Space Nova', 'Orbitron', sans-serif;
-    font-size: 1.7vw;
-    color: #ffffff;
-    top: 85vh;
-    left: 22vw;
-    transform: translateX(-50%);
-    text-align: center;
-    text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
-    animation: pulse 1.5s infinite ease-in-out;
-    letter-spacing: 2px;
-    font-weight: 500;
-    white-space: nowrap;
-    /* padding: 1vw; */
-    z-index: 100;
+  font-family: 'Space Nova', 'Orbitron', sans-serif;
+  font-size: 1.7vw;
+  color: #ffffff;
+  top: 85vh;
+  left: 22vw;
+  transform: translateX(-50%);
+  text-align: center;
+  text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
+  animation: pulse 1.5s infinite ease-in-out;
+  letter-spacing: 2px;
+  font-weight: 500;
+  white-space: nowrap;
+  /* padding: 1vw; */
+  z-index: 100;
 }
 
 
 @keyframes glow {
-    0% { text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
-    50% { text-shadow: 0 0 15px black, 0 0 30px black; }
-    100% { text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc; }
-  }
-
-  
-  .game-title-container {
-    margin-top: 30vh;
-    width: 36vw;
-    margin-left: 55vw;
-    text-align: center;
-    padding:  0;
-  }
-  
-  .game-title-container > h1:first-of-type {
-    margin-right: 10vw;
-  }
-
-  .game-title-container h1 {
-    font-weight: unset;
-    margin-top: unset;
-  }
-
-  .game-title {
-    font-family: 'Space Nova', 'Orbitron', sans-serif;
-    font-size: 5vw;
-    font-weight: lighter;
-    text-transform: uppercase;
-    letter-spacing: 0.09vw;
-    color: #ffffff;
+  0% {
     text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
-    animation: glow 3s infinite ease-in-out;
-    margin: 0;
-    position: relative;
-    z-index: 1;
   }
-  
-  .title-highlight {
-    color: #ff5a5a;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .game-title {
-      font-size: 2.6rem;
-      letter-spacing: 3px;
-    }
 
-    body {  
-      background: url(./../assets/images/bg4.jpeg);
-      background-size: auto 105vh;
-      background-position: -35vw 0vh;
-      background-repeat: no-repeat;
-    }
-
-    .game-title-container {
-      width: 40vw;
-      margin-top: 26vh;
-      margin-left: 16vw;
-    }
-    .start-msg-cont {
-      margin-top: 45vh;
-    }
-      .start-msg {
-          font-size: 1rem;
-          right: 12%;
-          /* padding: 10px 20px; */
-          /* width: 80%; */
-          white-space: normal;
-      }
+  50% {
+    text-shadow: 0 0 15px black, 0 0 30px black;
   }
+
+  100% {
+    text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
+  }
+}
+
+
+.game-title-container {
+  margin-top: 30vh;
+  width: 36vw;
+  margin-left: 55vw;
+  text-align: center;
+  padding: 0;
+}
+
+.game-title-container>h1:first-of-type {
+  margin-right: 10vw;
+}
+
+.game-title-container h1 {
+  font-weight: unset;
+  margin-top: unset;
+}
+
+.game-title {
+  font-family: 'Space Nova', 'Orbitron', sans-serif;
+  font-size: 5vw;
+  font-weight: lighter;
+  text-transform: uppercase;
+  letter-spacing: 0.09vw;
+  color: #ffffff;
+  text-shadow: 0 0 10px #6df1fc, 0 0 20px #6df1fc;
+  animation: glow 3s infinite ease-in-out;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.title-highlight {
+  color: #ff5a5a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .game-title {
+    font-size: 2.6rem;
+    letter-spacing: 3px;
+  }
+
+  body {
+    background: url(./../assets/images/bg4.jpeg);
+    background-size: auto 105vh;
+    background-position: -35vw 0vh;
+    background-repeat: no-repeat;
+  }
+
+  .game-title-container {
+    width: 40vw;
+    margin-top: 26vh;
+    margin-left: 16vw;
+  }
+
+  .start-msg-cont {
+    margin-top: 45vh;
+  }
+
+  .start-msg {
+    font-size: 1rem;
+    right: 12%;
+    /* padding: 10px 20px; */
+    /* width: 80%; */
+    white-space: normal;
+  }
+}
